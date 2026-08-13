@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  Int      @id @default(autoincrement())
+  name                String
+  email               String   @unique
+  password            String
+  joinedDate          String
+  streak              Int      @default(1)
+  lastActiveDate      String   @default("")
+  targetGoal          String   @default("FAANG")
+  mentorshipSelected  Boolean  @default(false)
+  mentorshipRequested Boolean  @default(false)
+  notes               String   @default("")
+  progressDsa         String   @default("[]") // JSON stringified array of topic names (strings)
+  progressFullstack   String   @default("[]") // JSON stringified array of topic names (strings)
+  progressAptitude    String   @default("[]") // JSON stringified array of question keys (e.g. ["Percentages-0"])
+  role                String   @default("STUDENT") // "STUDENT" or "ADMIN"
+}
+
+model DsaContent {
+  id          String   @id
+  module      String
+  topic       String
+  icon        String
+  description String
+  videos      String   @default("[]") // JSON stringified array of VideoItem
+  addedAt     DateTime @default(now())
+}
+
+model FsContent {
+  id          String   @id
+  topic       String
+  description String
+  videos      String   @default("[]") // JSON stringified array of VideoItem
+  addedAt     DateTime @default(now())
+}
+
+model AptitudeTopic {
+  id          String   @id
+  title       String
+  emoji       String   @default("🧠")
+  description String   @default("")
+  badge       String   @default("Practice")
+  questions   String   @default("[]") // JSON stringified array of AptitudeQuestion
+  addedAt     DateTime @default(now())
+}
+
+model SuccessStory {
+  id        String   @id
+  sender    String
+  title     String
+  message   String
+  time      String
+  photo     String   @default("") // base64 or URL
+  visible   Boolean  @default(false)
+  addedAt   DateTime @default(now())
+}
+
+model Announcement {
+  id        String   @id
+  title     String
+  body      String
+  type      String   @default("info") // "info", "warning", "success"
+  active    Boolean  @default(true)
+  expiresAt String   @default("")
+  createdAt DateTime @default(now())
+}
