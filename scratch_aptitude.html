@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aptitude Practice | 20 Questions Per Topic</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      color: #1a2c3e;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Header Styles */
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1e5a6f;
+      margin-bottom: 0.5rem;
+    }
+
+     .hero h2 {
+      font-size: 1.5 rem;
+      font-weight: 700;
+      color: #1e5a6f;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #4a6f82;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .stats-badge {
+      display: inline-flex;
+      gap: 1.5rem;
+      background: #e2eaf0;
+      padding: 0.5rem 1.5rem;
+      border-radius: 40px;
+      margin-top: 1rem;
+      font-weight: 500;
+      color: #1e5a6f;
+    }
+
+    /* Topics Grid */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    /* Topic Card */
+    .topic-card {
+      background: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      border: 1px solid #dde5ec;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Topic Header */
+    .topic-header {
+      background: linear-gradient(135deg, #e8f0f5 0%, #dde8f0 100%);
+      padding: 1.2rem 1.5rem;
+      border-bottom: 3px solid #c0d4e0;
+    }
+
+    .topic-header h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1a5a72;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topic-header h2 span {
+      font-size: 1.8rem;
+    }
+
+    .topic-desc {
+      font-size: 0.85rem;
+      color: #4a6f82;
+      margin-top: 6px;
+    }
+
+    .question-count-badge {
+      display: inline-block;
+      background: #1e5a6f;
+      color: white;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    /* Questions Section - Always Visible */
+    .questions-section {
+      padding: 1.2rem 1.5rem 1.5rem;
+      background: white;
+    }
+
+    .questions-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #1e5a6f;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e0ecf2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .questions-list {
+      list-style: none;
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .questions-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .questions-list::-webkit-scrollbar-track {
+      background: #e8f0f5;
+      border-radius: 10px;
+    }
+
+    .questions-list::-webkit-scrollbar-thumb {
+      background: #b8cfdd;
+      border-radius: 10px;
+    }
+
+    .question-item {
+      background: #fafdfe;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.7rem;
+      border-radius: 12px;
+      border-left: 4px solid #7bb3cc;
+      font-size: 0.88rem;
+      color: #2c4a5e;
+      transition: background 0.2s;
+    }
+
+    .question-item:hover {
+      background: #f3f9ff;
+    }
+
+    .question-number {
+      display: inline-block;
+      background: #d9e6ef;
+      border-radius: 20px;
+      padding: 0.15rem 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-right: 0.7rem;
+      color: #1a5a72;
+    }
+    a{
+      text-decoration: none;
+    }
+    .question-text {
+      display: inline;
+      word-break: break-word;
+    }
+
+    /* Footer / Hint */
+    .card-footer {
+      padding: 0.8rem 1.5rem 1.2rem;
+      background: #f9fcfd;
+      border-top: 1px solid #e0ecf2;
+      font-size: 0.75rem;
+      color: #6b8ea0;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #cbdde6;
+      font-size: 0.8rem;
+      color: #6b8ea0;
+    }
+
+    @media (max-width: 850px) {
+      .container {
+        padding: 1rem;
+      }
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .topics-grid {
+        grid-template-columns: 1fr;
+      }
+      .questions-list {
+        max-height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>📚 PavanX - Aptitude Practice Hub</h1>
+    <h2>Aptitude Class Recording Sheet <a href="https://docs.google.com/document/d/1e_0_6D0fVICCgnTjZAXvjx_tWED0a7lH-t63jH_Fv8k/edit?usp=sharing">Click Here</a></h2>
+    <p>20 carefully curated practice questions for each topic — no solutions, just pure practice to sharpen your skills.</p>
+    <div class="stats-badge">
+      <span>📖 20 Topics</span>
+      <span>✍️ 500+ Questions</span>
+      <span>🎯 Self-Assessment</span>
+    </div>
+  </div>
+
+  <div class="topics-grid">
+    
+
+
+    
+<!-- Topic 2: Logical Reasoning -->
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧩</span>Percentages
+        </h2>
+        <div class="topic-desc">Blood relations, direction sense, coding-decoding, puzzles, series, syllogisms</div>
+        <div class="question-count-badge">28 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+<li class="question-item"><span class="question-number">1</span> <span class="question-text">Rahul’s marks increased from 60 to 80 in mathematics. What is the percentage change?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">If Rahul’s marks changed from 50 to 30 in science, what is the percentage decrease?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">A number is increased by 20% and then again by 10%. What is the net percentage change?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">A number is increased by 10% and then decreased by 10%. What is the net percentage change?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">A number is decreased by 20% and then again decreased by 20%. What is the net percentage change?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">If a number is increased by 20%, by what percentage should it be decreased to return to the original?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">If a number is decreased by 20%, by what percentage should it be increased to return to the original?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">If Anirudh’s salary is 10% more than Vijay’s, by what percent is Vijay’s salary less than Anirudh’s?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">If Raj’s income is 25% less than Rahul’s, by what percent is Rahul’s income greater than Raj’s?</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">Half of one third of one fifth of a number is 40. Find 80% of the number.</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">15% of 45% of a number is 105.3. Find 24% of the number.</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">If 25% of a number is added to 100, the result is the number itself. Find the number.</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">If numerator increases by 20% and denominator by 25%, the fraction becomes 3/5. What is the original fraction?</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">If 40% of a is b, then b% of 20 equals what in terms of a?</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">An article priced at Rs 500 gets successive discounts of 20% and 40%. Find the selling price.</span></li>
+
+<li class="question-item"><span class="question-number">16</span> <span class="question-text">The final price is Rs 448 after discounts of 20% and 30%. Find the original price.</span></li>
+
+<li class="question-item"><span class="question-number">17</span> <span class="question-text">Three successive discounts of 10%, 15% and 20% are equivalent to a single discount of what percent?</span></li>
+
+<li class="question-item"><span class="question-number">18</span> <span class="question-text">Out of 1200 boys and 800 girls, 40% boys and 20% girls failed. What percentage passed?</span></li>
+
+<li class="question-item"><span class="question-number">19</span> <span class="question-text">If 60% boys and 55% girls passed and overall pass is 58%, find ratio of boys to girls.</span></li>
+
+<li class="question-item"><span class="question-number">20</span> <span class="question-text">Out of 250 questions, Praveen got 40% of first 125 correct. How many must he get correct in remaining to reach 60% overall?</span></li>
+
+<li class="question-item"><span class="question-number">21</span> <span class="question-text">Raj spends 25% on groceries, 20% on bills and 15% on travel. If he saves Rs 112000 annually, find his monthly salary.</span></li>
+
+<li class="question-item"><span class="question-number">22</span> <span class="question-text">Shekhar spends 50% on groceries, 10% on travel and 20% of remaining on girlfriend. If he saves Rs 16000, find his income.</span></li>
+
+<li class="question-item"><span class="question-number">23</span> <span class="question-text">Rajesh invested 20% more than Somesh. Somesh invested 10% less than Kunal. Total is Rs 17880. Find Kunal’s investment.</span></li>
+
+<li class="question-item"><span class="question-number">24</span> <span class="question-text">Fresh fruit has 64% water, dried fruit 20%. From 100 kg fresh, how much dried fruit is obtained?</span></li>
+
+<li class="question-item"><span class="question-number">25</span> <span class="question-text">Coins of 25p, 50p and 1 Rs are in ratio 10:5:2. Total value Rs 1400. Find total number of coins.</span></li>
+
+<li class="question-item"><span class="question-number">26</span> <span class="question-text">Rahul bought 12 dozens toys at Rs 300 per dozen and sold each at Rs 50. Find profit percentage.</span></li>
+
+<li class="question-item"><span class="question-number">27</span> <span class="question-text">A shopkeeper buys toffees at 6 for Rs 1. How many should he sell per rupee to gain 20%?</span></li>
+
+<li class="question-item"><span class="question-number">28</span> <span class="question-text">If selling price is doubled and profit triples, find the profit percent.</span></li></div>
+      <div class="card-footer">
+        💡 Analyze patterns, draw diagrams, and think critically
+      </div>
+    </div>
+
+
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧩</span>Profit and Loss
+        </h2>
+        <div class="topic-desc">Blood relations, direction sense, coding-decoding, puzzles, series, syllogisms</div>
+        <div class="question-count-badge">25 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+<li class="question-item"><span class="question-number">1</span> <span class="question-text">Vineet buys 6 mangoes for Rs 8 and sells them at 4 for Rs 6. Find his profit or loss percentage.</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">Vineet buys mangoes at 4 kg for Rs 28 and sells them at 6 kg for Rs 60. To earn Rs 108 profit, how many kg should he sell?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">Ajay loses Rs 60 if he sells mangoes at Rs 6 each but gains Rs 65 if he sells them at Rs 6.25. How many mangoes does he sell?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">Vijay buys mangoes at Rs 5 per dozen and equal quantity at Rs 4 per dozen. He sells at Rs 5.5 per dozen and gains Rs 50. How many dozens did he buy?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">Vineet buys equal number of mangoes at 50 for Rs 10 and 40 for Rs 10. He sells them at 90 for Rs 20. Find his profit or loss percentage.</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">If cost of 6 apples equals selling price of 8 apples, find profit or loss percentage.</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">If cost of 8 apples equals selling price of 6 apples, find profit or loss percentage.</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">Cost price of 20 apples equals selling price of x apples. If profit is 25%, find x.</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">By selling 45 apples a man gains the selling price of 30 apples. Find profit percentage.</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">Shankar sells at cost price but gives 900 g instead of 1 kg. Find his profit percentage.</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">If Shankar also cheats supplier by taking 1100 g per kg, find his profit percentage.</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">Kanak bought 2 bikes at Rs 1200 each. One sold at 20% profit and other at 10% loss. Find net profit or loss.</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">Kanak bought 2 bikes at Rs 1200 each. One sold at 20% profit and other at 20% loss. Find net profit or loss.</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">Kanak sold 2 bikes at Rs 1800 each. One sold at 20% profit and other at 10% loss. Find net profit or loss percentage.</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">Kanak sold 2 bikes at Rs 1200 each. One sold at 20% profit and other at 20% loss. Find net profit or loss.</span></li>
+
+<li class="question-item"><span class="question-number">16</span> <span class="question-text">After giving 12.5% discount, Ajay still gains 16.66%. Find the marked price percentage above cost price.</span></li>
+
+<li class="question-item"><span class="question-number">17</span> <span class="question-text">Ajay bought a rucksack for Rs 4000 and sold at 18% loss. With that money he bought a cooker and sold at 20% profit. Find overall profit or loss.</span></li>
+
+<li class="question-item"><span class="question-number">18</span> <span class="question-text">Ajay marks goods to gain 40% and gives 15% discount. Find actual profit percentage.</span></li>
+
+<li class="question-item"><span class="question-number">19</span> <span class="question-text">Mahesh’s sales increase by 30% weekly. Difference between week 1 and week 3 is Rs 828. Find week 2 sales.</span></li>
+
+<li class="question-item"><span class="question-number">20</span> <span class="question-text">Overall profit in 3 weeks is 71%. First and second week profits are 25% and 20%. Find third week profit.</span></li>
+
+<li class="question-item"><span class="question-number">21</span> <span class="question-text">Milkman buys milk at x Rs/litre and sells at 3x Rs/litre, mixing 2L water per 10L milk. Find overall profit.</span></li>
+
+<li class="question-item"><span class="question-number">22</span> <span class="question-text">After reducing MP by Rs 32, a shopkeeper still gains 15%. CP = Rs 320. Find profit if sold at MP.</span></li>
+
+<li class="question-item"><span class="question-number">23</span> <span class="question-text">If selling price doubles and profit triples, find profit percentage.</span></li>
+
+<li class="question-item"><span class="question-number">24</span> <span class="question-text">Selling 20 balls for Rs 1500 results in loss equal to CP of 5 balls. Find cost price per ball.</span></li>
+
+<li class="question-item"><span class="question-number">25</span> <span class="question-text">A shopkeeper gains 25% and uses 25% less weight. Find total profit percentage.</span></li>    <div class="card-footer">
+</div>  
+    💡 Analyze patterns, draw diagrams, and think critically
+      </div>
+    </div>
+
+
+
+    
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧩</span>Ratios and Proportions
+        </h2>
+        <div class="topic-desc">Blood relations, direction sense, coding-decoding, puzzles, series, syllogisms</div>
+        <div class="question-count-badge">20 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+<li class="question-item"><span class="question-number">1</span> <span class="question-text">Find the inverse ratio of 1:2:3.</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">If 15% of A is equal to 20% of B, then what is the ratio A:B?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">An amount of Rs 2250 is divided among Ajay, Vijay and Rahul such that 1/6 of Ajay’s share, 1/4 of Vijay’s share and 2/5 of Rahul’s share are equal. Find Ajay’s share.</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">A sum is divided among A, B, C and D in the ratio 5:2:4:3. If C gets Rs 1000 more than D, find B’s share.</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">Seats for Maths, Physics and Biology are in the ratio 5:7:8. They are increased by 40%, 50% and 75%. Find the new ratio.</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">The ratio of boys to girls is 3:2. If 20% boys and 25% girls scored ≥90%, what percentage scored less than 90%?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">Rs 160 consists of 1 rupee, 50 paise and 25 paise coins in ratio 4:5:6. Find the number of 25 paise coins.</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">Income ratio of Ajay and Vijay is 3:2 and expenditure ratio is 5:3. If both save Rs 1000, find Ajay’s income.</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">Students in 3 batches are in ratio 2:3:5. After adding 20 students to each, ratio becomes 4:5:7. Find original total students.</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">Divide Rs 500 among P, Q, R and S such that (P+Q) = 3(R+S), Q = 4R and R = 1.5S. Find Q’s share.</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">Income of A is 10% more than B and B is 20% less than C. Find ratio A:B:C.</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">Tickets priced Rs 1000, Rs 500 and Rs 200 are sold in ratio 3:2:5. Total collection is Rs 2.5 crore. Find number of tickets sold.</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">Find three numbers in ratio 1:2:3 such that sum of their squares is 504.</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">Ratio of marks of A and B is 5:7. If 5A = 3B + 12, find their marks.</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">Salary of A is 80% of B and salary of C is 120% of A. Find ratio A:B:C.</span></li>
+
+<li class="question-item"><span class="question-number">16</span> <span class="question-text">In 120 litres mixture, milk:water = 2:1. To make it 1:2, how much water should be added?</span></li>
+
+<li class="question-item"><span class="question-number">17</span> <span class="question-text">If 0.75 : x :: 5 : 8, find x.</span></li>
+
+<li class="question-item"><span class="question-number">18</span> <span class="question-text">Find the fourth proportional to 3, 4, 15.</span></li>
+
+<li class="question-item"><span class="question-number">19</span> <span class="question-text">Speeds of three bikes are in ratio 3:5:7. Find ratio of time taken for same distance.</span></li>
+
+<li class="question-item"><span class="question-number">20</span> <span class="question-text">Find the mean proportional between 6 and 24.</span></li>     </div>
+      <div class="card-footer">
+        💡 Solve each question independently | No solutions provided
+      </div>
+    </div>
+
+
+       <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧩</span>Permuations and Combinations
+        </h2>
+        <div class="topic-desc">Blood relations, direction sense, coding-decoding, puzzles, series, syllogisms</div>
+        <div class="question-count-badge">24 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+<li class="question-item"><span class="question-number">1</span> <span class="question-text">From a group of 5 men and 6 women, four persons are to be selected to form a committee. In how many ways can this be done?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">From 5 men and 6 women, select 5 persons such that at least 3 men are included. In how many ways?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">From 5 men and 6 women, select 5 persons such that at most 3 men are included. In how many ways?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">From 5 men and 6 women, form a committee of 5 with exactly 2 men and 3 women. In how many ways?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">A box has 3 white, 3 black and 4 red balls. In how many ways can 3 balls be drawn such that at least one is red?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">In how many ways can a team of 11 be selected from 15 players such that 2 particular players are always included?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">In how many ways can a team of 11 be selected from 15 players such that 2 particular players are never together?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">In how many ways can a team of 11 be formed from 15 players such that one particular player is excluded?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">There are 8 points on a circle. Find (A) number of lines and (B) number of triangles formed.</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">In how many ways can the letters of the word "LEADING" be arranged?</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">In how many ways can "LEADING" be arranged such that consonants always come together?</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">In how many ways can "ASSASSINATION" be arranged such that vowels always come together?</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">From 5 boys and 3 girls, select 4 such that at least one girl is included. In how many ways?</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">How many 4-digit numbers can be formed using digits 0,1,2,3,4 without repetition and divisible by 5?</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">A box has 3 white, 4 black and 5 red balls. In how many ways can 4 balls be drawn such that at least one is white?</span></li>
+
+<li class="question-item"><span class="question-number">16</span> <span class="question-text">In how many ways can "RETAIL" be arranged such that vowels occupy only even positions?</span></li>
+
+<li class="question-item"><span class="question-number">17</span> <span class="question-text">How many 4-digit even numbers can be formed using digits 2,3,4,5 without repetition?</span></li>
+
+<li class="question-item"><span class="question-number">18</span> <span class="question-text">In how many ways can 5 men and 6 women be seated such that no two men sit together?</span></li>
+
+<li class="question-item"><span class="question-number">19</span> <span class="question-text">How many 4-letter words can be formed from "FATHERLY" using each letter once and including a particular letter?</span></li>
+
+<li class="question-item"><span class="question-number">20</span> <span class="question-text">How many 4-letter words can be formed from "LINEAR" with repetition allowed but excluding letter A?</span></li>
+
+<li class="question-item"><span class="question-number">21</span> <span class="question-text">How many words can be formed using letters of "bbbbcccccddef"?</span></li>
+
+<li class="question-item"><span class="question-number">22</span> <span class="question-text">In how many ways can 5 balls be placed in 3 buckets?</span></li>
+
+<li class="question-item"><span class="question-number">23</span> <span class="question-text">In how many ways can 10 students be seated in a circle?</span></li>
+
+<li class="question-item"><span class="question-number">24</span> <span class="question-text">How many words can be formed from "GRANDMOTHER" such that vowels never come together?</span></li>     <div class="card-footer">
+    </div>  
+    💡 Solve each question independently | No solutions provided
+      </div>
+    </div>
+
+
+       <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧩</span>Probability
+        </h2>
+        <div class="topic-desc">Blood relations, direction sense, coding-decoding, puzzles, series, syllogisms</div>
+        <div class="question-count-badge">24 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+<li class="question-item"><span class="question-number">1</span> <span class="question-text">From a group of 5 men and 6 women, four persons are to be selected to form a committee. In how many ways can this be done?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">From 5 men and 6 women, select 5 persons such that at least 3 men are included. In how many ways?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">From 5 men and 6 women, select 5 persons such that at most 3 men are included. In how many ways?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">From 5 men and 6 women, form a committee of 5 with exactly 2 men and 3 women. In how many ways?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">A box has 3 white, 3 black and 4 red balls. In how many ways can 3 balls be drawn such that at least one is red?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">In how many ways can a team of 11 be selected from 15 players such that 2 particular players are always included?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">In how many ways can a team of 11 be selected from 15 players such that 2 particular players are never together?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">In how many ways can a team of 11 be formed from 15 players such that one particular player is excluded?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">There are 8 points on a circle. Find (A) number of lines and (B) number of triangles formed.</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">In how many ways can the letters of the word "LEADING" be arranged?</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">In how many ways can "LEADING" be arranged such that consonants always come together?</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">In how many ways can "ASSASSINATION" be arranged such that vowels always come together?</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">From 5 boys and 3 girls, select 4 such that at least one girl is included. In how many ways?</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">How many 4-digit numbers can be formed using digits 0,1,2,3,4 without repetition and divisible by 5?</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">A box has 3 white, 4 black and 5 red balls. In how many ways can 4 balls be drawn such that at least one is white?</span></li>
+
+<li class="question-item"><span class="question-number">16</span> <span class="question-text">In how many ways can "RETAIL" be arranged such that vowels occupy only even positions?</span></li>
+
+<li class="question-item"><span class="question-number">17</span> <span class="question-text">How many 4-digit even numbers can be formed using digits 2,3,4,5 without repetition?</span></li>
+
+<li class="question-item"><span class="question-number">18</span> <span class="question-text">In how many ways can 5 men and 6 women be seated such that no two men sit together?</span></li>
+
+<li class="question-item"><span class="question-number">19</span> <span class="question-text">How many 4-letter words can be formed from "FATHERLY" using each letter once and including a particular letter?</span></li>
+
+<li class="question-item"><span class="question-number">20</span> <span class="question-text">How many 4-letter words can be formed from "LINEAR" with repetition allowed but excluding letter A?</span></li>
+
+<li class="question-item"><span class="question-number">21</span> <span class="question-text">How many words can be formed using letters of "bbbbcccccddef"?</span></li>
+
+<li class="question-item"><span class="question-number">22</span> <span class="question-text">In how many ways can 5 balls be placed in 3 buckets?</span></li>
+
+<li class="question-item"><span class="question-number">23</span> <span class="question-text">In how many ways can 10 students be seated in a circle?</span></li>
+
+<li class="question-item"><span class="question-number">24</span> <span class="question-text">How many words can be formed from "GRANDMOTHER" such that vowels never come together?</span></li>     <div class="card-footer">
+    </div>  
+    💡 Solve each question independently | No solutions provided
+      </div>
+    </div>
+
+
+
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧮</span> Seating Arrangements
+        </h2>
+        <div class="topic-desc">Percentages, profit & loss, ratios, averages, time & work, numbers</div>
+        <div class="question-count-badge">6 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="Practice Questions ">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+        <li class="question-item"><span class="question-number">1</span> <span class="question-text">A, P, R, X, S and Z are sitting in a row. S and Z are in the centre. A and P are at the ends. R is sitting to the left of A. Who is to the right of P?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">Five girls are sitting on a bench to be photographed. Seema is to the left of Rani and to the right of Bindu. Mary is to the right of Rani. Reeta is between Rani and Mary. Who is sitting immediate right to Reeta? Who is in the middle of the photograph? Who is second from the right? Who is second from the left in photograph?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">A gets more marks than B but less than C. D gets less marks than E but more than A. If C gets less than D then who amongst A, B, C, D, E gets the highest marks?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">Hari and Akash are ranked seventh and eleventh respectively from the top in a class of 31 students. What will be their respective ranks from the bottom in the class?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">Rajeev ranks seventh from the top and twenty eighth from the bottom in a class. How many students are there in the class?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">Six friends P, Q, R, S, T and U are sitting around a hexagonal table each at one corner and facing the centre. P is second to the left of U. Q is neighbour of R and S. T is second to the left of S. Which one is sitting opposite to P? Who is the fourth person to the left of Q? Which of the following are the neighbours of P? Which one is sitting opposite to T?</span></li>
+</div>
+<div class="card-footer">
+        💡 Solve each question independently | No solutions provided
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧮</span> Set Theory
+        </h2>
+        <div class="topic-desc">Percentages, profit & loss, ratios, averages, time & work, numbers</div>
+        <div class="question-count-badge">8 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="Practice Questions ">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+        <li class="question-item"><span class="question-number">1</span> <span class="question-text">If X and B are two sets, then (X − Y) ∩ Y is …………………..
+a. X       b. Y      c. X ∪ Y      d. X ∩ Y      e. { }</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">250 people read English newspaper and 350 people read Hindi newspaper. There are 25 people who read both of these newspapers. Find the number of persons who read 1 or 2 of these newspapers.</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">100 students play badminton, 160 students play cricket. There are 25 students who play both of these games. The total number of students in the class is 300. What is: (a) number of students playing at least 1 game? (b) number of students not playing any of the two games? (c) the number of students playing only badminton? (d) the number of students playing only cricket?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">In a class of 150 students numbered 1 to 150, all even numbered students opt for Biology, those whose numbers are divisible by 5 opt for Chemistry, and those whose numbers are divisible by 7 opt for Physics. How many opt for none of the three subjects?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">Of the 200 candidates who were interviewed for a position at a company, 80 had bikes, 70 had cars and 120 had cycles. 30 of them had both a bike and a car, 40 had a car and a cycle, 40 had both a bike and a cycle and 10 had all three. How many candidates had none of the three?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">In a class of 50 students, 20 enrolled for both French and German. 25 enrolled for German. If all students enrolled for at least one of the two subjects, then how many students enrolled for only French and not German?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">In a class, 45% of the students enrolled for Computers and 65% enrolled for English classes. If 15% of the students enrolled for both Computers and English, what percentage of the students did not enroll for either of the two subjects?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">In a school, 120 students have English only, 180 have Hindi, and 200 have German. 40 students have both Hindi and English, 40 have both Hindi and German, and 65 have both German and English. There are 20 students who have all three languages. All students take at least one of the three languages. Calculate the following: (1) Total number of students in school (2) Students having only English (3) Students having only Hindi & English (4) Students having exactly 1 language (5) Students having exactly 2 languages (6) Students having at least 1 language (7) Students having at least 2 languages (8) Students having at most 3 languages (9) Students having Hindi & one other language (10) Students having English & one or more other languages.</span></li></div>
+<div class="card-footer">
+        💡 Solve each question independently | No solutions provided
+      </div>
+    </div>
+
+
+
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧮</span> Simple Interest and Compound Interest
+        </h2>
+        <div class="topic-desc">Percentages, profit & loss, ratios, averages, time & work, numbers</div>
+        <div class="question-count-badge">28 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="Practice Questions ">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+ <li class="question-item"><span class="question-number">1</span> <span class="question-text">A sum of Rs.10000 is lent out for 2 years at 5% p.a. Find the simple interest. a) 1000 b) 100 c) 1100 d) 1010</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">A sum of Rs.8000 is lent out for 2 years at 6% p.a. Find the amount. a) 8880 b) 8980 c) 8960 d) 8860</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">A sum of Rs.7500 is lent out for 9 months at 6% per annum. Find the simple interest. a) 337.5 b) 345 c) 415.5 d) 325.75</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">A sum of Rs.6300 is lent out for 8 months at 7% per annum. Find the simple interest. a) 294 b) 196 c) 250 d) 177</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">A sum of Rs.1725 is lent out from May 1st to July 12th at 8% per annum. Find the simple interest. a) 23 b) 27.6 c) 29.88 d) 33</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">The simple interest obtained on a sum of Rs.800 in 2 years is Rs.96. Find the rate of interest per annum. a) 6% b) 8% c) 10% d) 12%</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">The amount obtained on a certain sum in 3 years at 12% per annum is Rs.9792. Find the sum. a) 7500 b) 7000 c) 7200 d) 8000</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">A sum of Rs.16800 is divided into 2 parts and lent out. One at 6% p.a. and the other at 8% p.a. After 2 years the total amount is Rs.19000. Find the sum lent at 6%. a) 12200 b) 9900 c) 11500 d) 3600</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">In what time will the simple interest on a certain sum become 0.125 times of the principal at 10% per annum? a) 1.5 years b) 1.25 years c) 2 years d) 1.333 years</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">The simple interest accrued in 2 years on a principal of Rs.24000 is one-eighth of the principal. What is the rate of interest? a) 6.25% b) 6% c) 7.5% d) 12.5%</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">Ramesh took a loan at 6% per annum and it increased every year by 1.5%. If he pays Rs.8190 as interest at the end of 3 years, what is the loan amount? a) 38600 b) 36000 c) 35500 d) 36400</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">Ramesh invested a certain sum at 5% p.a. and another sum at 6% p.a. He gained Rs.1220 as total interest for one year. If the rates were interchanged, he would have earned Rs.20 less. What is the second sum? a) 10000 b) 11000 c) 12000 d) 13000</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">A sum of Rs.2600 is divided into two parts. One part is lent at 10% p.a. for 5 years and the other at 9% p.a. for 6 years. The simple interests are equal. Find the second sum. a) 1250 b) 1350 c) 2300 d) 2100</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">Rs.6500 is divided into two parts such that the interest on one part at 10% p.a. for 5 years is Rs.530 less than that on the second part at 8% p.a. for 5 years. Find the first sum. a) 2300 b) 2500 c) 3200 d) 4100</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">Find the compound interest on Rs.15000 for 2 years at 10% per annum compounded annually. a) 3750 b) 3000 c) 3050 d) 3150</span></li>
+
+<li class="question-item"><span class="question-number">16</span> <span class="question-text">Find the compound interest on Rs.15000 for 1 year at 10% p.a. compounded half-yearly. a) 1537.5 b) 1630 c) 1717 d) 1500</span></li>
+
+<li class="question-item"><span class="question-number">17</span> <span class="question-text">Find the compound interest on Rs.33000 for 6 months at 12% p.a. compounded quarterly. a) 2130 b) 2008 c) 2009.7 d) 2209.7</span></li>
+
+<li class="question-item"><span class="question-number">18</span> <span class="question-text">The compound interest on Rs.15800 for 2 years is Rs.7716.72. Find the rate of interest. a) 11% b) 19% c) 30% d) 22%</span></li>
+
+<li class="question-item"><span class="question-number">19</span> <span class="question-text">What is the approximate compound interest on Rs.4890 at 5% p.a. for 3 years? a) 772 b) 867 c) 923 d) 1100</span></li>
+
+<li class="question-item"><span class="question-number">20</span> <span class="question-text">The simple interest on Rs.22500 for 4 years is Rs.10800. What is the compound interest for 2 years at the same rate? a) 5680 b) 5724 c) 5484 d) 5980</span></li>
+
+<li class="question-item"><span class="question-number">21</span> <span class="question-text">The simple interest on a sum for 8 years at 13% p.a. is Rs.6500. Find the compound interest for 2 years at 8% p.a. a) 960 b) 1077 c) 1050 d) 1040</span></li>
+
+<li class="question-item"><span class="question-number">22</span> <span class="question-text">Find the difference between simple interest and compound interest on Rs.7300 at 6% p.a. for 2 years. a) 30 b) 56.78 c) 78 d) 26.28</span></li>
+
+<li class="question-item"><span class="question-number">23</span> <span class="question-text">The difference between simple interest and compound interest for 2 years at 5% p.a. is Rs.15. Find the sum. a) 6000 b) 5400 c) 3500 d) 5000</span></li>
+
+<li class="question-item"><span class="question-number">24</span> <span class="question-text">A bank offers 10% compound interest p.a. compounded half-yearly. A customer deposits Rs.1900 on Jan 1 and July 1. Find the interest earned in one year. a) 290 b) 291.75 c) 300 d) 310.11</span></li>
+
+<li class="question-item"><span class="question-number">25</span> <span class="question-text">There is a 60% increase in a sum in 3 years at simple interest. Find the compound interest on Rs.15000 for 2 years at the same rate. a) 7000 b) 3400 c) 6600 d) 6100</span></li>
+
+<li class="question-item"><span class="question-number">26</span> <span class="question-text">The least number of years in which a sum doubles at 20% compound interest is: a) 3 b) 4 c) 5 d) 6</span></li>
+
+<li class="question-item"><span class="question-number">27</span> <span class="question-text">A sum doubles in 8 years at compound interest. In how many years will it become 16 times? a) 45 b) 40 c) 36 d) 32</span></li>
+
+<li class="question-item"><span class="question-number">28</span> <span class="question-text">A sum doubles in 5 years at simple interest. In how many years will it become 5 times? a) 20 b) 25 c) 30 d) 35</span></li>
+</div>
+<div class="card-footer">
+        💡 Solve each question independently | No solutions provided
+      </div>
+    </div>
+
+
+
+
+   <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧮</span> Syllogisms
+        </h2>
+        <div class="topic-desc">Percentages, profit & loss, ratios, averages, time & work, numbers</div>
+        <div class="question-count-badge">10 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="Practice Questions ">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+<li class="question-item"><span class="question-number">1</span> <span class="question-text">All cats are dogs. All dogs are wolves. Conclusions: (1) All cats are wolves (2) All wolves are dogs</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">All tables are chairs. Some chairs are mats. Conclusions: (1) Some mats are tables (2) All tables are mats</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">All pens are pencils. All scales are pens. Conclusions: (1) All pencils are scales (2) All scales are pencils</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">All beds are cots. All cots are rugs. Conclusions: (1) All rugs are cots (2) All beds are rugs</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">Some rules are good. All rules are bad. Conclusions: (1) No rule is bad (2) Some rules are bad</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">All cats are dogs. No dogs are wolves. Conclusions: (1) No cats are wolves (2) Some wolves are cats</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">Some guns are bombs. No bomb is bullet. Conclusions: (1) Some bullets are bombs (2) No bullet is gun (3) Some bullets are guns</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">All guns are bombs. Some bombs are not bullets. Conclusions: (1) All guns being bullets is a possibility (2) Some guns are not bullets</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">All red are green. Some green are blue. Conclusions: (1) No red is blue (2) Some red is blue</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">All flowers are bouquets. Some bouquets are thorns. Conclusions: (1) No flower is thorn (2) Some flower is thorn</span></li></div>
+<div class="card-footer">
+        💡 Solve each question independently | No solutions provided
+      </div>
+    </div>
+
+
+
+<div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧮</span> Time and Work
+        </h2>
+        <div class="topic-desc">Percentages, profit & loss, ratios, averages, time & work, numbers</div>
+        <div class="question-count-badge">8 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="Practice Questions ">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+<li class="question-item"><span class="question-number">1</span> <span class="question-text">A can do a work in 15 days and B in 20 days. If they work together for 5 days, then the fraction of work left is: a) 5/12 b) 3/4 c) 6/11 d) 7/9</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">A can construct a road in 16 days and B in 20 days. With the help of C, they completed the job in 8 days. In how many days can C alone do the work? a) 80 b) 65 c) 50 d) 40</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">A, B and C can do a piece of work in 10, 20 and 30 days respectively. In how many days can A complete the work if B and C assist him on every third day? a) 10 b) 11 c) 9 d) 4</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">A can finish a job 60 days earlier than B. Working together, in how many days can they complete the work? a) 20 b) 25 c) 22.5 d) 18</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">A alone can complete a work in 8 days and B in 12 days. They undertake the work for Rs.6000. With the help of C, they finish the work in 4 days. How much should C be paid? a) 500 b) 1000 c) 2500 d) 1100</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">A can do a piece of work in 8 days; B and C together can do it in 4 days, while A and C together can do it in 3 days. In how many days can B alone complete the work? a) 20 b) 24 c) 13 d) 10</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">A can complete a work in the same time as B and C together. If A and B together can do it in 8 days and C alone in 40 days, then in how many days can B alone complete the work? a) 18 b) 19 c) 20 d) 23</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">A completes 80% of a work in 10 days. He then calls B, and together they finish the remaining work in 1 day. In how many days can B alone complete the whole work? a) 7 b) 8.33333 c) 11.11 d) 9.09</span></li>
+</div>          
+<div class="card-footer">
+        💡 Solve each question independently | No solutions provided
+      </div>
+    </div>
+
+
+
+
+
+
+<div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧮</span> Time Speed and Distance
+        </h2>
+        <div class="topic-desc">Percentages, profit & loss, ratios, averages, time & work, numbers</div>
+        <div class="question-count-badge">43 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="Practice Questions ">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+<li class="question-item"><span class="question-number">1</span> <span class="question-text">A person crosses an 800 m long street in 10 minutes. What is his speed in km/hr? a) 4.8 b) 5 c) 5.6 d) 7</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">A car covers a distance at 60 kmph in 5 hours. To cover the same distance in 2 hours, what speed is required? a) 150 kmph b) 200 kmph c) 80 kmph d) 100 kmph</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">If a person walks at 18 km/hr instead of 12 km/hr, he would have walked 40 km more. What is the actual distance? a) 50 km b) 35 km c) 80 km d) 100 km</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">A train can travel 100% faster than a car. Both start together and reach 50 km away at the same time, but the train stops for 20 minutes. Find the speed of the train. a) 135 kmph b) 160 kmph c) 150 kmph d) 175 kmph</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">The ratio of speeds of two trains is 4:3. If the second train covers 100 km in 2 hours, what is the speed of the first train? a) 33.33 kmph b) 66.66 kmph c) 75 kmph d) 55 kmph</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">A car travelling at 5/7 of its speed covers 54 km in 1 hr 40 min 48 sec. Find the actual speed. a) 35 kmph b) 45 kmph c) 50 kmph d) 55 kmph</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">A man completes a journey in 10 hours, travelling first half at 20 km/hr and second half at 25 km/hr. Find total distance. a) 222.222 km b) 333.333 km c) 444.444 km d) 555.555 km</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">Abhay takes 3 hours more than Sameer to cover 40 km. If Abhay doubles his speed, he takes 1 hour less than Sameer. Find Abhay’s speed. a) 3 kmph b) 7 kmph c) 8 kmph d) 5 kmph</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">Arjun reaches at 2 PM at 20 kmph and 12 noon at 30 kmph. At what speed should he travel to reach at 1 PM? a) 24 kmph b) 21 kmph c) 25 kmph d) 26.36 kmph</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">A farmer travelled 65 km in 10 hours, partly walking at 5 kmph and partly cycling at 7 kmph. Find distance walked. a) 12 km b) 12.5 km c) 13 km d) 13.5 km</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">A man would take 80 minutes less if he moved 6 kmph faster and 80 minutes more if 4 kmph slower. Find the distance. a) 80 km b) 120 km c) 140 km d) 160 km</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">In a 10 km race, A beats B by 1 km and B beats C by 1 km. By how much does A beat C? a) 2 km b) 2.2 km c) 1.5 km d) 1.9 km</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">In a 100 m race, A gives B 10 m and C 25 m. How much can B give C? a) 6.666 m b) 16.666 m c) 26 m d) 28.91 m</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">In a 100 m race, A runs at 8 kmph and gives B 12 m start, yet beats him by 10 sec. Find B’s speed. a) 4.14 kmph b) 12 kmph c) 5 kmph d) 5.76 kmph</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">In an 800 m race, speeds of A:B = 5:6 and A has 250 m start. By how much does A win? a) 100 m b) 40 m c) 125 m d) 140 m</span></li>
+
+<li class="question-item"><span class="question-number">16</span> <span class="question-text">In a 200 m race, A beats B by 36 m or 6 sec. Find A’s time. a) 25 s b) 27.33 s c) 29.99 s d) 30 s</span></li>
+
+<li class="question-item"><span class="question-number">17</span> <span class="question-text">A runs 1 1/5 times as fast as B. If A gives B 100 m start, find distance of race. a) 200 m b) 400 m c) 600 m d) 800 m</span></li>
+
+<li class="question-item"><span class="question-number">18</span> <span class="question-text">A train at 44 kmph crosses a man in 10 seconds. Find train length. a) 122.22 m b) 140 m c) 155 m d) 211 m</span></li>
+
+<li class="question-item"><span class="question-number">19</span> <span class="question-text">A 160 m train passes a man running at 4 kmph in same direction in 10 sec. Find train speed. a) 12 kmph b) 20 kmph c) 25 kmph d) 10 kmph</span></li>
+
+<li class="question-item"><span class="question-number">20</span> <span class="question-text">A 100 m train crosses a bridge in 40 sec at 36 kmph. Find bridge length. a) 250 m b) 300 m c) 350 m d) 500 m</span></li>
+
+<li class="question-item"><span class="question-number">21</span> <span class="question-text">Two trains at 50 kmph & 40 kmph cross in same direction in 40 sec. Find combined length. a) 111.111 m b) 222.222 m c) 333.333 m d) 444.444 m</span></li>
+
+<li class="question-item"><span class="question-number">22</span> <span class="question-text">Two trains at 50 kmph & 40 kmph cross in opposite direction in 40 sec. Find combined length. a) 1 km b) 900 m c) 1.2 km d) 1.333 km</span></li>
+
+<li class="question-item"><span class="question-number">23</span> <span class="question-text">A train passes platform in 42 sec and man in 24 sec at 36 kmph. Find platform length. a) 180 m b) 200 m c) 250 m d) 240 m</span></li>
+
+<li class="question-item"><span class="question-number">24</span> <span class="question-text">Two trains (1.2 km & 0.8 km) at 50 & 100 kmph opposite. Time to cross? a) 45 s b) 48 s c) 50 s d) 52 s</span></li>
+
+<li class="question-item"><span class="question-number">25</span> <span class="question-text">A jogger at 10 kmph is 300 m ahead of a 160 m train at 46 kmph. Time to cross? a) 30 s b) 36 s c) 46 s d) 50 s</span></li>
+
+<li class="question-item"><span class="question-number">26</span> <span class="question-text">Two 150 m trains cross in 10 sec, one twice speed of other. Find faster speed. a) 15 m/s b) 20 m/s c) 25 m/s d) 30 m/s</span></li>
+
+<li class="question-item"><span class="question-number">27</span> <span class="question-text">Two 400 m trains at 45 & 15 kmph opposite. Time to pass driver? a) 18 s b) 12 s c) 20 s d) 24 s</span></li>
+
+<li class="question-item"><span class="question-number">28</span> <span class="question-text">Trains at 60 & 40 kmph same direction. Fast train passes man in 10 sec. Find length. a) 40 m b) 44.444 m c) 50 m d) 55.555 m</span></li>
+
+<li class="question-item"><span class="question-number">29</span> <span class="question-text">A train crosses another (half its length) in 12 sec and platform in 45 sec. Find platform length. a) 400 m b) 420 m c) 444.444 m d) 450 m</span></li>
+
+<li class="question-item"><span class="question-number">30</span> <span class="question-text">Two trains start at 8 AM & 9 AM from A & B (100 km apart). Speeds 20 & 10 kmph. When meet? a) 10:30 AM b) 11:40 AM c) 12:50 PM d) 1 PM</span></li>
+
+<li class="question-item"><span class="question-number">31</span> <span class="question-text">After meeting, trains reach in 9 & 16 hours. Find speed ratio. a) 2:3 b) 3:7 c) 4:3 d) 1:1</span></li>
+
+<li class="question-item"><span class="question-number">32</span> <span class="question-text">Boat speed 14 kmph, stream 6 kmph. Time for 80 km downstream? a) 4 hrs b) 6 hrs c) 3 hrs d) 5 hrs</span></li>
+
+<li class="question-item"><span class="question-number">33</span> <span class="question-text">Speed with current 16 kmph, current 4 kmph. Speed against current? a) 8 kmph b) 12 kmph c) 10 kmph d) 14 kmph</span></li>
+
+<li class="question-item"><span class="question-number">34</span> <span class="question-text">Upstream 8h36m, downstream 3h48m. Find ratio boat:stream. a) 8:3 b) 6:7 c) 23:37 d) 31:12</span></li>
+
+<li class="question-item"><span class="question-number">35</span> <span class="question-text">Downstream 14 km in 2h, upstream in 7h. Find still water speed. a) 3.5 kmph b) 4 kmph c) 5 kmph d) 6.5 kmph</span></li>
+
+<li class="question-item"><span class="question-number">36</span> <span class="question-text">Boat speed 10 kmph, current 5 kmph. Distance in 24 min downstream? a) 4 km b) 5 km c) 6 km d) 7 km</span></li>
+
+<li class="question-item"><span class="question-number">37</span> <span class="question-text">Boat speed 6 kmph, current 2 kmph. Round trip in 2h. Distance? a) 2 km b) 3.333 km c) 4.555 km d) 5.333 km</span></li>
+
+<li class="question-item"><span class="question-number">38</span> <span class="question-text">Downstream 1h, upstream 1.5h, current 5 kmph. Find still water speed. a) 20 kmph b) 25 kmph c) 27.77 kmph d) 30 kmph</span></li>
+
+<li class="question-item"><span class="question-number">39</span> <span class="question-text">Boatman goes 3 km upstream in 1h and 2 km downstream in 10 min. Time for 10 km still water? a) 1h b) 1h15m c) 1h20m d) 1h33m</span></li>
+
+<li class="question-item"><span class="question-number">40</span> <span class="question-text">Boat speed 7 kmph, current 3.5 kmph. Round trip 105 km. Time? a) 40 hrs b) 44 hrs c) 50 hrs d) 57.77 hrs</span></li>
+
+<li class="question-item"><span class="question-number">41</span> <span class="question-text">Time upstream is double downstream. Find ratio boat:stream. a) 1:3 b) 3:1 c) 1:4 d) 4:1</span></li>
+
+<li class="question-item"><span class="question-number">42</span> <span class="question-text">A rows 50 km and back in 16h. 6 km downstream = 2 km upstream time. Find stream speed. a) 2 kmph b) 3.333 kmph c) 4.166 kmph d) 4.25 kmph</span></li>
+
+<li class="question-item"><span class="question-number">43</span> <span class="question-text">Two persons run on 200 m circular track at 5 m/min and 20 m/min. Find: (a) first meeting time (b) meeting at start (c) number of meeting points (d) same for opposite direction.</span></li></div>          
+<div class="card-footer">
+        💡 Solve each question independently | No solutions provided
+      </div>
+    </div>
+
+
+
+
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧮</span> Directions 
+        </h2>
+        <div class="topic-desc">Percentages, profit & loss, ratios, averages, time & work, numbers</div>
+        <div class="question-count-badge">10 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="Practice Questions ">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+        <li class="question-item"><span class="question-number">1</span> <span class="question-text">A person starts from his home and goes 150 metres towards north. After turning left, he walks 100 metres. Again he turns left and walks 150 metres. In which direction and at what distance is he from his home now?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">Virat starts from office and walks 40 m towards south. She turns left and walks 50 m, then turns left again and walks 40 m. Finally she turns right and walks 100 m. How far and in what direction is she from the office?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">Karan starts from his home and walks 40 metres towards east, then takes a right turn and walks 30 metres. What is his distance from the starting point and in which direction is he now?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">Rani walked 40 m towards north, then turned right and walked 50 m. Then turned right and walked 65 m, then turned left and walked 15 m, and finally turned left and walked 25 m. In which direction and how many metres is he from the starting position?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">Anjali put his timepiece on the table such that at 6 P.M. the hour hand points to North. In which direction will the minute hand point at 10:45 P.M.?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">A man is facing South-East. He turns 90° clockwise, then 180° anticlockwise and then another 90° in the same direction. Which direction is he facing now?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">One morning after sunrise, Sunny was standing facing a pole. The shadow of the pole fell exactly to his left. Which direction was he facing?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">One morning after sunrise Arun and Nikhil were talking face to face. If Nikhil's shadow was exactly to the right of Arun, which direction was Nikhil facing?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">Madhu starts cycling in the morning facing the Sun. After some time, he takes a 45° turn to his left and then again turns 90° towards his left. In which direction is he now?</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">If north-west becomes south, north-east becomes west and so on, then south will become which direction?</span></li></div>
+      <div class="card-footer">
+        💡 Solve each question independently | No solutions provided
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Topic 2: Logical Reasoning -->
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧩</span> Averages
+        </h2>
+        <div class="topic-desc">Blood relations, direction sense, coding-decoding, puzzles, series, syllogisms</div>
+        <div class="question-count-badge">21 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+          <li class="question-item"><span class="question-number">1</span> <span class="question-text">Find the average of first 30 natural numbers.</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">The average of 2, 7, 6 and x is 5 and the average of 18, 1, 6, x and y is 10. What is the value of y?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">The average weight of 15 boys in a class is 40 kg and that of the remaining 10 boys is 50 kg. Find the average weights of all the boys in the class.</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">The average of five consecutive odd numbers is 83. What is the fourth number in the descending order?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">The average of 4 consecutive even numbers A, B, C and D respectively is 79. What is the product of A and D?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">The average age of P boys is x years and of q girls is y years. What is the average age of all together?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">Nine persons went to a hotel for taking their meals. Eight of them spent Rs 12 each and the ninth spent Rs 8 more than the average expenditure of all nine. What was the total money spent by them?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">In the first 20 overs of a cricket game, the run rate was only 5. What should be the run rate in the remaining 30 overs to reach the target of 295 runs?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">A museum has an average of 550 visitors on Sundays and 250 on other days. What is the average number of visitors per day in a month of 30 days beginning with a Sunday?</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">The average age of a committee of 8 members is 40 years. A member aged 55 years retired and was replaced by another aged 39 years. What is the new average age?</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">The average weight of 8 persons increases by 2.5 kg when a new person replaces one weighing 65 kg. What might be the weight of the new person?</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">The captain of a cricket team of 11 members is 29 years old and the wicket keeper is 26 years old. If their ages are excluded, the average age of remaining players is one year less than the team average. What is the average age of the team?</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">The average of 10 numbers is calculated as 15. One number 36 was wrongly read as 26. What is the correct average?</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">The average age of 40 students is 8 years. Including the teacher increases the average by 0.5 years. What is the age of the teacher?</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">A contractor employs 20 male, 15 female and 5 child workers. Daily wages are Rs 25, Rs 20 and Rs 8 respectively. What is the average wage per day?</span></li>
+
+<li class="question-item"><span class="question-number">16</span> <span class="question-text">The average monthly income of a family of four is Rs 10000. After one daughter leaves, the average becomes Rs 9500. What was her income?</span></li>
+
+<li class="question-item"><span class="question-number">17</span> <span class="question-text">Average salary of 24 workers is Rs 2800. The supervisor earns Rs 6500. What is the average salary of all 25 employees?</span></li>
+
+<li class="question-item"><span class="question-number">18</span> <span class="question-text">The average marks of 9 students is 54. Three scored 80, 56 and 62. What is the average of remaining 6 students?</span></li>
+
+<li class="question-item"><span class="question-number">19</span> <span class="question-text">If the average of 11 consecutive odd numbers is 17, what is the difference between the smallest and largest number?</span></li>
+
+<li class="question-item"><span class="question-number">20</span> <span class="question-text">Average age of 30 boys is 15. A 21-year-old leaves and a new boy joins. New average is 14.8. What is the age of the new boy?</span></li>
+
+<li class="question-item"><span class="question-number">21</span> <span class="question-text">The average weight of 10 men decreases by 1 kg when a 50 kg man is replaced. What is the weight of the new man?</span></li></ul>
+      </div>
+      <div class="card-footer">
+        💡 Analyze patterns, draw diagrams, and think critically
+      </div>
+    </div>
+
+
+
+
+    
+    <!-- Topic 2: Logical Reasoning -->
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧩</span> Mixtures and Alegations
+        </h2>
+        <div class="topic-desc">Blood relations, direction sense, coding-decoding, puzzles, series, syllogisms</div>
+        <div class="question-count-badge">15 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+          <li class="question-item"><span class="question-number">1</span> <span class="question-text">In what ratio must a shopkeeper mix two types of rice worth Rs 50 per kg and Rs 70 per kg so that the average cost is Rs 65 per kg?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">A container has 50 litres of milk. 10 litres are removed and replaced with water. This is repeated once more. How much milk is left now?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">In what ratio must sugar at Rs 1.15 and Rs 1.24 per kg be mixed so that selling at Rs 1.50 gives 25% gain?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">How much water should be mixed with 36 litres of milk costing Rs 5 per litre so that the mixture costs Rs 3.60 per litre?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">How many kg of sugar at 50 paise per kg must be mixed with 25 kg at 34 paise per kg so that selling at 44 paise gives 10% gain?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">How much sugar at Rs 9.5 per kg should be added to 17 kg of tea at Rs 20 per kg so that the mixture is worth Rs 13 per kg?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">A hospital mixture costs Rs 7.62 per litre with 5% salt. Another mixture has 75% water and costs Rs 7.82 per litre. What will be the cost of 5 litres mixture containing 18% salt?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">A vessel has a mixture with 20% spirit. 5 litres are removed and replaced with water. Now spirit is 12%. What is the total quantity of the vessel?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">An alloy has 65% copper. Another has copper and nickel in ratio 17:3. In what ratio should they be mixed so that copper is 4 times nickel?</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">One mixture has 88% sulphur and another has 70%. In what ratio should they be mixed to get 84% sulphur?</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">In what ratio should water be mixed with juice costing Rs 12 per litre to obtain mixture worth Rs 8 per litre?</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">In what proportion should water be mixed with milk to gain 40% by selling at cost price?</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">A 400 gm solution has 30% spirit. What ratio of spirit should be added to make it 80%?</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">One alloy has silver and copper in ratio 5:1 and another in 7:2. What quantities should be mixed to make 5 lb alloy with 80% silver?</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">Box A has wheat at Rs 30/kg and Box B at Rs 40/kg. Mixed in ratio 4:7, what is the price per kg of the mixture?</span></li> </div>
+      <div class="card-footer">
+        💡 Analyze patterns, draw diagrams, and think critically
+      </div>
+    </div>
+
+
+
+       <!-- Topic 2: Logical Reasoning -->
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧩</span>Number Series
+        </h2>
+        <div class="topic-desc">Blood relations, direction sense, coding-decoding, puzzles, series, syllogisms</div>
+        <div class="question-count-badge">15 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+          <li class="question-item"><span class="question-number">1</span> <span class="question-text">In what ratio must a shopkeeper mix two types of rice worth Rs 50 per kg and Rs 70 per kg so that the average cost is Rs 65 per kg?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">A container has 50 litres of milk. 10 litres are removed and replaced with water. This is repeated once more. How much milk is left now?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">In what ratio must sugar at Rs 1.15 and Rs 1.24 per kg be mixed so that selling at Rs 1.50 gives 25% gain?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">How much water should be mixed with 36 litres of milk costing Rs 5 per litre so that the mixture costs Rs 3.60 per litre?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">How many kg of sugar at 50 paise per kg must be mixed with 25 kg at 34 paise per kg so that selling at 44 paise gives 10% gain?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">How much sugar at Rs 9.5 per kg should be added to 17 kg of tea at Rs 20 per kg so that the mixture is worth Rs 13 per kg?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">A hospital mixture costs Rs 7.62 per litre with 5% salt. Another mixture has 75% water and costs Rs 7.82 per litre. What will be the cost of 5 litres mixture containing 18% salt?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">A vessel has a mixture with 20% spirit. 5 litres are removed and replaced with water. Now spirit is 12%. What is the total quantity of the vessel?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">An alloy has 65% copper. Another has copper and nickel in ratio 17:3. In what ratio should they be mixed so that copper is 4 times nickel?</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">One mixture has 88% sulphur and another has 70%. In what ratio should they be mixed to get 84% sulphur?</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">In what ratio should water be mixed with juice costing Rs 12 per litre to obtain mixture worth Rs 8 per litre?</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">In what proportion should water be mixed with milk to gain 40% by selling at cost price?</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">A 400 gm solution has 30% spirit. What ratio of spirit should be added to make it 80%?</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">One alloy has silver and copper in ratio 5:1 and another in 7:2. What quantities should be mixed to make 5 lb alloy with 80% silver?</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">Box A has wheat at Rs 30/kg and Box B at Rs 40/kg. Mixed in ratio 4:7, what is the price per kg of the mixture?</span></li> </div>
+      <div class="card-footer">
+        💡 Analyze patterns, draw diagrams, and think critically
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Topic 3: Verbal Ability -->
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>📖</span> Blood Relations
+        </h2>
+        <div class="topic-desc">Synonyms, antonyms, sentence correction, idioms, fill in the blanks</div>
+        <div class="question-count-badge">15 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+          <li class="question-item"><span class="question-number">1</span> <span class="question-text">Pointing to a photograph Ramu said, “He is the father of my father’s father’s son”. How is Ramu related to the man in the photograph?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">Pointing to a boy in the photograph, Rani said, “His sister is the only daughter of my father”. How is the boy related to Rani’s husband?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">Pointing to Yathish, Sundari said, “He is the husband of my father’s only daughter”. How is Yathish related to Sundari?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">A girl introduced a boy as the son of the daughter of the father of her uncle. The boy is the girl's?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">Pointing to a lady, a man said, "The son of her only brother is the brother of my wife." How is the lady related to the man?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">Manu told Harish, "The girl I met yesterday at the beach was the youngest daughter of the sister-in-law of my friend's father." How is the girl related to Manu's friend?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">Pointing to a photograph, a man said, "I have no brother or sister but that man’s father is my father’s son." Whose photograph was it?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">A is brother of B, C is sister of B. How is B related to C?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">A is the brother of B. B is the brother of C. D is the father of A. Based on these statements, which statement cannot be definitely true?</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">A is B's sister. C is B's mother. D is C's father. E is D's mother. Then, how is A related to D?</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">In a family of six members A, B, C, D, E and F: A and B are married, A is male. D is the only son of C, who is A’s brother. E is D’s sister. B is daughter-in-law of F whose husband is dead. How is F related to E?</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">There are six persons A, B, C, D, E and F. C is sister of F. B is brother of E’s husband. D is father of A and grandfather of F. There are two fathers, three brothers and a mother. Who is the mother?</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">A man said, "The lady in the photograph is my nephew's maternal grandmother." How is the lady related to the man's sister (who has no other sister)?</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">If 'A $ B' means 'A is brother of B', 'A @ B' means 'A is wife of B', 'A # B' means 'A is daughter of B' and 'A & B' means 'A is father of B', which expression indicates 'K is father-in-law of H'?</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">A family consists of P, Q, R, X, Y and Z. Q is son of R but R is not mother. P and R are married. Y is brother of R. X is daughter of P. Z is brother of P. Who is the brother-in-law of R?</span></li></ul>
+      </div>
+      <div class="card-footer">
+        💡 Strengthen vocabulary and grammar through regular practice
+      </div>
+    </div>
+
+
+
+<!-- Topic 2: Logical Reasoning -->
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🧩</span>Partnership
+        </h2>
+        <div class="topic-desc">Blood relations, direction sense, coding-decoding, puzzles, series, syllogisms</div>
+        <div class="question-count-badge">13 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+<li class="question-item"><span class="question-number">1</span> <span class="question-text">Raj invested Rs 76000 in a business. After a few months Monty joined with Rs 57000. At the end of the year profits are shared in the ratio 2:1. After how many months did Monty join?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">A and B started a business in the ratio 5:6. C joined after 6 months with an amount equal to B. Total profit is Rs 102000. How much did C invest?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">Sita and Geeta invested Rs 120000 and Rs 135000 respectively. Find their shares in a profit of Rs 35700.</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">Ravi invested Rs 36000. After 3 months Shyam joined with Rs 36000. Find their shares in a profit of Rs 37100.</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">Sony, Mony and Tony invested Rs 20000 each. After 5 months Sony withdrew Rs 5000, Mony withdrew Rs 4000 and Tony added Rs 6000. Total profit is Rs 69900. Find their shares.</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">Sheela invested Rs 21000. Reema joined later with Rs 36000. After how many months did Reema join if profits are equal?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">X and Y share profits in the ratio 2:3. If X invested Rs 40000, find the investment of Y.</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">Mohinder and Surinder invested Rs 12000 and Rs 9000. After 3 months Sudhir joined with Rs 15000. Find Sudhir's share in a half-year profit of Rs 9500.</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">In a partnership, A invests 1/6 capital for 1/6 time, B invests 1/3 capital for 1/3 time and C invests the rest for full time. Find B’s share in Rs 4600.</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">Ajay and Sahil invested Rs 50000 and Rs 40000 respectively and share profit in that ratio. Find Ajay’s share in Rs 22500.</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">Navdeep invested Rs 16000 for 9 months, Rahul Rs 12000 for 6 months and Raj Rs 8000 for 12 months. Total profit is Rs 26000. Find Rahul’s share.</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">Divya invested Rs 3500. After 5 months Jyoti joined. Profit ratio is 2:3. How much did Jyoti invest?</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">Aman invested Rs 550 and Rahul Rs 330. Profit ratio is 10:3. After how many months did Rahul join?</span></li>
+</div>
+      <div class="card-footer">
+        💡 Analyze patterns, draw diagrams, and think critically
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Topic 4: Data Interpretation -->
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>📊</span> Calenders
+        </h2>
+        <div class="topic-desc">Tables, bar graphs, pie charts, line graphs, caselets</div>
+        <div class="question-count-badge">10 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+          <li class="question-item"><span class="question-number">1</span> <span class="question-text">What was the day on 15th August 1947?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">What was the day on 10th December 2001?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">If today is Monday, after 63 days it will be?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">If today is Thursday, after 51 days it will be?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">The last day of a century cannot be?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">How many leap years does 100 years have?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">On 8th Dec, 2007 Saturday falls. What day of the week was it on 8th Dec, 2006?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">The calendar for the year 1993 will repeat again in which year?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">If Aug 21st, 2012 falls on Thursday then March 11th, 2013 falls on which day?</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">The calendar of the year 2024 can be used again in which year?</span></li></ul>
+      </div>
+      <div class="card-footer">
+        💡 Practice reading charts carefully and calculating percentages
+      </div>
+    </div>
+
+    <!-- Topic 5: Permutation & Probability -->
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>🎲</span> Clocks
+        </h2>
+        <div class="topic-desc">Arrangements, combinations, probability basics, counting principles</div>
+        <div class="question-count-badge">15 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+         <li class="question-item"><span class="question-number">1</span> <span class="question-text">What is the time shown on the mirror of an unnumbered clock if the actual time is 3:45?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">The number of times the minute and the hour hand form 90 degrees between 1 pm and 4 pm is?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">The number of times the minute and the hour hand form 180 degrees between 4 pm and 8 pm is?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">How many times will a broken clock show the correct time in 4 days?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">At what time between 4 pm and 5 pm will the hour and the minute hand form an angle of 90 degrees?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">At what time between 4 pm and 5 pm will the hour and the minute hand form an angle of 180 degrees?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">At what time between 4 pm and 5 pm will the hour and the minute hand form a straight line?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">What is the angle formed between the hour hand and the minute hand if they are 30 minutes apart?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">What is the angle formed between the hour and the minute hand at 8:45 pm?</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">What is the angle formed between the hour and the minute hand at 2:25 pm?</span></li>
+
+<li class="question-item"><span class="question-number">11</span> <span class="question-text">A clock started at noon. The hour hand has turned by how many degrees at 8:30 pm?</span></li>
+
+<li class="question-item"><span class="question-number">12</span> <span class="question-text">Jeevan sets his clock right at 3 pm on Monday. The clock gains 60 seconds every hour. What is the time shown at 6:30 pm on Wednesday?</span></li>
+
+<li class="question-item"><span class="question-number">13</span> <span class="question-text">A clock was set right at 10 am on Monday. If the clock loses 10 minutes every hour then when will it show the correct time?</span></li>
+
+<li class="question-item"><span class="question-number">14</span> <span class="question-text">A watch which gains uniformly is 5 minutes slow at 8 o'clock in the morning on Sunday and 5 minutes 48 seconds fast at 8 pm on the following Sunday. When was it correct?</span></li>
+
+<li class="question-item"><span class="question-number">15</span> <span class="question-text">A clock is set right at 5 a.m. The clock loses 16 minutes in 24 hours. What will be the true time when the clock indicates 10 p.m. on the 4th day?</span></li></ul>
+      </div>
+      <div class="card-footer">
+        💡 Use formulas: nPr, nCr, and probability = favorable/total
+      </div>
+    </div>
+
+    <!-- Topic 6: Time, Speed & Work -->
+    <div class="topic-card">
+      <div class="topic-header">
+        <h2>
+          <span>⏱️</span> Coding and Decoding
+        </h2>
+        <div class="topic-desc">Work efficiency, pipes & cisterns, speed-distance-time, trains</div>
+        <div class="question-count-badge">10 Practice Questions</div>
+      </div>
+      <div class="questions-section">
+        <div class="questions-title">
+          <span>📝</span> Practice Questions
+        </div>
+        <ul class="questions-list">
+         <li class="question-item"><span class="question-number">1</span> <span class="question-text">In a certain code ‘CAT’ is written as ECV. How is ‘DOG’ written in that code?</span></li>
+
+<li class="question-item"><span class="question-number">2</span> <span class="question-text">If the word VIKAS is written as 22911119, how will you write the word VISHWAS?</span></li>
+
+<li class="question-item"><span class="question-number">3</span> <span class="question-text">If PUNCH = 62, then KICK = ?</span></li>
+
+<li class="question-item"><span class="question-number">4</span> <span class="question-text">If HISTORY is coded as IHTSPQZ, then GEOGRAPHY is coded as?</span></li>
+
+<li class="question-item"><span class="question-number">5</span> <span class="question-text">If JERRI is coded as NVUGK, then CID is coded as?</span></li>
+
+<li class="question-item"><span class="question-number">6</span> <span class="question-text">If POKEMON is coded as KLPVNLM, then DORAEMON is coded as?</span></li>
+
+<li class="question-item"><span class="question-number">7</span> <span class="question-text">If Red is called Blue, Blue is called Yellow, Yellow is called White, White is called Pink and Pink is called Black, then what is the colour of the sky?</span></li>
+
+<li class="question-item"><span class="question-number">8</span> <span class="question-text">In a certain code language, '134' means 'good and tasty'; '478' means 'see good pictures' and '729' means 'pictures are faint'. Which digit stands for 'see'?</span></li>
+
+<li class="question-item"><span class="question-number">9</span> <span class="question-text">In a certain code language, ‘sit na dom’ means ‘bring me water’, ‘na ko tod’ means ‘water is life’, ‘tub od sit’ means 'give me toy’ and ‘ko lin kot’ means ‘life and death’. Which word represents 'is'?</span></li>
+
+<li class="question-item"><span class="question-number">10</span> <span class="question-text">If Red means Blue, Blue means Yellow, Yellow means White, White means Pink and Pink means Black, then what is the colour of the sky?</span></li></ul>
+      </div>
+
+      
+
+      <div class="card-footer">
+        💡 Remember: Work = Rate × Time, and Speed = Distance / Time
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>📘 20 practice questions per topic — No solutions provided intentionally. Challenge yourself to find the answers!</p>
+    <p style="margin-top: 0.5rem;">✔️ Aptitude Mastery | Practice consistently for best results</p>
+  </footer>
+</div>
+</body>
+</html>
