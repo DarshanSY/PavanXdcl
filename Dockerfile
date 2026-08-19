@@ -1,6 +1,9 @@
-FROM node:20-alpine
+FROM node:20-slim
 
 WORKDIR /app
+
+# Install openssl and certificates required for Prisma query engine
+RUN apt-get update -y && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 # Copy package configurations
 COPY package*.json ./
@@ -16,15 +19,15 @@ RUN cd backend && npm install
 COPY shared ./shared
 COPY backend ./backend
 
-# Build and seed backend
+# Build backend and generate Prisma client
 WORKDIR /app/backend
 RUN npx prisma generate
 RUN npm run build
-RUN npm run prisma:seed
 
 EXPOSE 5000
 
 ENV PORT=5000
 ENV NODE_ENV=production
 
-CMD ["npm", "start"]
+# Seed database and start server
+CMD ["sh", "-c", "npx prisma db push && npm run prisma:seed && npm start"]
