@@ -4,24 +4,18 @@ import apiRouter from './routes/api';
 
 const app = express();
 
-// Configure CORS to support both client-side portals
-const allowedOrigins = [
-  'http://localhost:5173', // Frontend local port
-  'http://localhost:5174', // Admin dashboard local port
-  'http://localhost:5175', // Admin dashboard fallback local port
-];
-
+// Configure CORS to support local development and production Vercel deployments
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps, curl, server-to-server)
     if (!origin) return callback(null, true);
-    // Permit specified origins, and fall back to open CORS in non-prod environments
-    if (allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
+    
+    // Allow localhost, vercel deployments, or any web client origin
+    return callback(null, true);
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json({ limit: '10mb' }));

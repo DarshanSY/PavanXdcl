@@ -11,17 +11,17 @@ async function main() {
 
   // 1. Seed admin
   const adminEmail = 'admin@pavanxdcl.in';
+  const hashedAdminPassword = await bcrypt.hash('PavanAdmin@2026', 10);
   const existingAdmin = await prisma.user.findFirst({
     where: { email: adminEmail }
   });
 
   if (!existingAdmin) {
-    const hashedPassword = await bcrypt.hash('PavanAdmin@2026', 10);
     await prisma.user.create({
       data: {
         name: 'Pavan Prakash',
         email: adminEmail,
-        password: hashedPassword,
+        password: hashedAdminPassword,
         joinedDate: 'July 2026',
         streak: 1,
         targetGoal: 'FAANG',
@@ -32,22 +32,26 @@ async function main() {
     });
     console.log('Admin account created successfully.');
   } else {
-    console.log('Admin account already exists.');
+    await prisma.user.update({
+      where: { id: existingAdmin.id },
+      data: { password: hashedAdminPassword, role: 'ADMIN' }
+    });
+    console.log('Admin account updated with verified credentials.');
   }
 
   // 1b. Seed demo student
   const studentEmail = 'student@pavanxdcl.in';
+  const hashedStudentPassword = await bcrypt.hash('password123', 10);
   const existingStudent = await prisma.user.findFirst({
     where: { email: studentEmail }
   });
 
   if (!existingStudent) {
-    const hashedPassword = await bcrypt.hash('password123', 10);
     await prisma.user.create({
       data: {
         name: 'Demo Student',
         email: studentEmail,
-        password: hashedPassword,
+        password: hashedStudentPassword,
         joinedDate: 'July 2026',
         streak: 3,
         targetGoal: 'FAANG',
@@ -58,7 +62,11 @@ async function main() {
     });
     console.log('Demo student account created successfully.');
   } else {
-    console.log('Demo student account already exists.');
+    await prisma.user.update({
+      where: { id: existingStudent.id },
+      data: { password: hashedStudentPassword, role: 'STUDENT' }
+    });
+    console.log('Demo student account updated with verified credentials.');
   }
 
   // 2. Seed DSA Content
